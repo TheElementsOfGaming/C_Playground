@@ -39,3 +39,6 @@
 
 # debug information files
 *.dwo
+
+# Simple Notes (For my eyes only)
+*newRepo.txt
