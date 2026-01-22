@@ -108,3 +108,28 @@ How to use these templates:
     Sketch the pointers: On paper, draw i and k (or left and right).
 
     Check the "Stop" condition: Is it when the loop ends (i < size) or when pointers meet (left < right)?
+
+5. The Triple Reverse
+
+class Solution {
+public:
+    // The trusty Two-Pointer Swap Function
+    void reverse(vector<int>& nums, int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
+    void rotate(vector<int>& nums, int k) {
+        int n = nums.size();
+        // Handle cases where k is larger than the array size
+        k = k % n;
+        reverse(nums, 0, n - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, n - 1);
+    }
+};
