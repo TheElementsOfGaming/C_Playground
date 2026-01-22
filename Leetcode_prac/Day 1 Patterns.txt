@@ -1,0 +1,72 @@
+Day 1 Patterns: 
+
+1. The "Filter" (Fast & Slow)
+
+Pattern: One pointer scans (i), one pointer writes (k). Problem: Move Zeroes
+C++
+
+void moveZeroes(vector<int>& nums) {
+    int k = 0; // The Write Pointer
+    
+    // Step 1: Filter non-zeroes to the front
+    for (int i = 0; i < nums.size(); i++) {
+        if (nums[i] != 0) {
+            nums[k] = nums[i];
+            k++;
+        }
+    }
+    
+    // Step 2: Fill the remaining "tail" with zeroes
+    while (k < nums.size()) {
+        nums[k] = 0;
+        k++;
+    }
+}
+
+2. The "De-Duplicator" (Look-Back)
+
+Pattern: Compare the current element to what was written N steps ago. Problem: Remove Duplicates (Allowing at most 2)
+C++
+
+int removeDuplicates(vector<int>& nums) {
+    if (nums.size() <= 2) return nums.size();
+
+    int k = 2; // Start at 2 because first two are always "safe"
+    for (int i = 2; i < nums.size(); i++) {
+        // Look back 2 spots from where we are writing
+        if (nums[i] != nums[k - 2]) {
+            nums[k] = nums[i];
+            k++;
+        }
+    }
+    return k;
+}
+
+3. The "Swapper" (Opposite Ends)
+
+Pattern: Pointers start at edges and "meet in the middle." Problem: Reverse a String
+C++
+
+void reverseString(vector<char>& s) {
+    int left = 0;
+    int right = s.size() - 1;
+
+    while (left < right) {
+        // Standard swap
+        char temp = s[left];
+        s[left] = s[right];
+        s[right] = temp;
+
+        // Move inward
+        left++;
+        right--;
+    }
+}
+
+How to use these templates:
+
+    Identify the goal: Am I removing things? (Filter). Am I reordering? (Swapper). Am I cleaning a sorted list? (De-Duplicator).
+
+    Sketch the pointers: On paper, draw i and k (or left and right).
+
+    Check the "Stop" condition: Is it when the loop ends (i < size) or when pointers meet (left < right)?
