@@ -63,6 +63,44 @@ void reverseString(vector<char>& s) {
     }
 }
 
+This is a great addition because it marks your transition from Two-Pointer patterns to Greedy/Voting patterns.
+
+Here is the updated section for your printable cheat sheet. I’ve titled this one "The King of the Hill" pattern to help the logic stick.
+4. The Voting Pattern (Boyer-Moore)
+
+Scenario: Finding an element that appears more than half the time (>n/2). Key Insight: If you pair up different elements and "cancel" them out, the majority element is guaranteed to be the one left over.
+📝 The C++ Template
+C++
+
+int majorityElement(vector<int>& nums) {
+    int candidate = 0;
+    int count = 0;
+
+    for (int x : nums) {
+        // Phase 1: If power is depleted, pick a new candidate
+        if (count == 0) {
+            candidate = x;
+        }
+
+        // Phase 2: Update the candidate's power (count)
+        if (x == candidate) {
+            count++; // Same army: gain power
+        } else {
+            count--; // Enemy army: both lose 1 solider
+        }
+    }
+
+    return candidate; // The "last soldier standing"
+}
+
+⚠️ Common Pitfall: Variable Shadowing
+
+In an interview, do not write int candidate = x; inside the if block.
+
+    Bad: if (count == 0) { int candidate = x; } (Creates a temporary variable that vanishes).
+
+    Good: if (count == 0) { candidate = x; } (Updates the variable you created at the top).
+
 How to use these templates:
 
     Identify the goal: Am I removing things? (Filter). Am I reordering? (Swapper). Am I cleaning a sorted list? (De-Duplicator).
