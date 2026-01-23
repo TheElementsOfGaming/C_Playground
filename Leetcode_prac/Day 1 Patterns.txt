@@ -133,3 +133,50 @@ public:
         reverse(nums, k, n - 1);
     }
 };
+
+Here is a concise write-up for your cheat sheet. This format focuses on the "Why" and "How," which is exactly what interviewers look for.
+Algorithm: One-Pass Greedy (Best Time to Buy & Sell Stock)
+The Problem
+
+Find the maximum difference between two numbers in an array (prices[j]−prices[i]) such that j>i. If no profit is possible, return 0.
+The Logic
+
+Instead of comparing every pair (O(n2)), we maintain a running minimum. As we iterate, we treat every element as a potential selling day and calculate the profit against the lowest price seen before it.
+Pseudocode
+
+    Initialize min_price to infinity (or prices[0]) and max_profit to 0.
+
+    Iterate through each price in the array:
+
+        Update min_price: min_price = min(min_price, price)
+
+        Update max_profit: max_profit = max(max_profit, price - min_price)
+
+    Return max_profit.
+
+Complexity
+
+    Time: O(n) — We visit each element exactly once.
+
+    Space: O(1) — We only store two integer variables regardless of input size.
+
+Code Snippet (C++)
+C++
+
+int maxProfit(vector<int>& prices) {
+    int minPrice = INT_MAX; 
+    int maxProfit = 0;
+    
+    for (int price : prices) {
+        if (price < minPrice) {
+            minPrice = price; // Update the "valley"
+        } else if (price - minPrice > maxProfit) {
+            maxProfit = price - minPrice; // Update the "peak" profit
+        }
+    }
+    return maxProfit;
+}
+
+Key Takeaway
+
+    "Buy at the lowest valley seen so far; sell at the highest peak found after that valley."
