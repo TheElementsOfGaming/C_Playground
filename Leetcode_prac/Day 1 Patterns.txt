@@ -180,3 +180,56 @@ int maxProfit(vector<int>& prices) {
 Key Takeaway
 
     "Buy at the lowest valley seen so far; sell at the highest peak found after that valley."
+
+Algorithm: Greedy BFS / Level-by-Level (Jump Game II)
+The Logic
+
+Imagine you are at your current position. You look at all the spots you can reach in exactly one jump. This is your "current window." From all those spots, you find the one that can launch you the farthest. Once you reach the end of your current window, you must take another jump, and your "window" moves to that new farthest point.
+The 3 Key Variables
+
+    jumps: The total number of jumps taken (the answer).
+
+    currentEnd: The farthest we can go with our current number of jumps. (The end of the current window).
+
+    farthest: The farthest point we can reach with one more jump.
+
+Pseudocode
+
+    Initialize jumps = 0, currentEnd = 0, farthest = 0.
+
+    Loop through the array (up to the second-to-last element):
+
+        Update farthest = max(farthest, i + nums[i]).
+
+        If we reach currentEnd (the edge of our current jump's range):
+
+            Increment jumps.
+
+            Update currentEnd = farthest (move the window to the new horizon).
+
+    Return jumps.
+
+Complexity
+
+    Time: O(n) — Single pass.
+
+    Space: O(1) — Only three variables.
+
+Code Snippet (C++)
+C++
+
+int jump(vector<int>& nums) {
+    int jumps = 0, currentEnd = 0, farthest = 0;
+    
+    // We don't need to jump from the last element, so stop at size() - 1
+    for (int i = 0; i < nums.size() - 1; i++) {
+        farthest = max(farthest, i + nums[i]);
+        
+        // If we've reached the end of our current reach...
+        if (i == currentEnd) {
+            jumps++;             // We MUST jump
+            currentEnd = farthest; // New boundary is the best we saw in the last window
+        }
+    }
+    return jumps;
+}
